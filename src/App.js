@@ -1,26 +1,60 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import TodoInput from './components/TodoInput'
+import TodoList from './components/TodoList'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import uuid from 'uuid';
+
+class App extends React.Component {
+  state={
+    items: [],
+    id: 0,
+    item:'',
+    editItem: false
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      item:e.target.value
+    })
+  }
+
+  handleSubmit = (e) => {
+
+  }
+
+  render() {
+    return (
+      <div className="container">
+      <div className="row">
+        <div className="col-10 mx-auto col-md-8 mt-4">
+          <h3 className="text-capitalize text-center">Todo Input</h3>
+          <TodoInput 
+            item={this.state.item} 
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
+          />
+          <TodoList/>
+        </div>
+      </div>
     </div>
-  );
+    );
+  }
 }
 
 export default App;
+
+// function App() {
+//   return (
+//     <div className="container">
+//       <div className="row">
+//         <div className="col-10 mx-auto col-md-8 mt-4">
+//           <h3 className="text-capitalize text-center">Todo Input</h3>
+//           <TodoInput/>
+//           <TodoList/>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
