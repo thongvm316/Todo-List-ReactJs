@@ -19,7 +19,6 @@ class App extends React.Component {
 
   handleChange = (e) => {
     const { value } = e.target
-    // console.log(value)
     this.setState({
       item: value
     })
@@ -31,9 +30,7 @@ class App extends React.Component {
       id: this.state.id,
       title: this.state.item
     }
-    // console.log(newItem)
     const updateItems = [...this.state.items, newItem]
-    // console.log(updateItems)
     this.setState({
       items: updateItems,
       item: '',
@@ -42,8 +39,34 @@ class App extends React.Component {
     })
   }
 
+  clearList = () => {
+    this.setState({
+      items: []
+    })
+  }
+
+  handleDelete = id => {
+    const filteredItems = this.state.items.filter(item => item.id !== id)
+    this.setState({
+      items: filteredItems
+    })
+  }
+
+  handleEdit = (id) => {
+    const filteredItems = this.state.items.filter(item => item.id !== id) // ?
+    const selectItem = this.state.items.find(item => item.id === id)
+    console.log(filteredItems);
+    console.log(selectItem);
+    this.setState({
+      items: filteredItems,
+      item: selectItem.title, // ?
+      editItem: true,
+      id: id
+    })  
+  }
+
   render() {
-    // console.log(this.state.items)
+    // console.log(this.state);
     return (
       <div className="container">
       <div className="row">
@@ -53,9 +76,13 @@ class App extends React.Component {
             item={this.state.item} 
             handleChange={this.handleChange}
             handleSubmit={this.handleSubmit}
+            editItem={this.state.editItem}
           />
           <TodoList
-            items={this.state.items}
+            items={this.state.items} 
+            clearList={this.clearList}
+            handleDelete={this.handleDelete}
+            handleEdit={this.handleEdit}
           />
         </div>
       </div>
@@ -65,17 +92,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-// function App() {
-//   return (
-//     <div className="container">
-//       <div className="row">
-//         <div className="col-10 mx-auto col-md-8 mt-4">
-//           <h3 className="text-capitalize text-center">Todo Input</h3>
-//           <TodoInput/>
-//           <TodoList/>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
